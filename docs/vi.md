@@ -61,22 +61,16 @@ Nhớ cài cron trigger cho Cloudflare Workers
 
 * Các bạn đã tải các danh sách bộ lọc bằng script khác thì nên xoá đi bằng tính năng xoá của script đã up hoặc xoá tay
 
-* Nếu không biết thêm vào Secret Github Action thì có thể điền giá trị vào file **[.env](../.env)** và sửa file **[main.yml](../.github/workflows/main.yml)** như sau, loại bỏ các dòng secret env
+* Mình đã update thêm tính năng xoá danh sách khi các bạn không muốn sử dụng script nữa. Vào **[main.yml](../.github/workflows/main.yml)** để như sau:
+
 ```yml
-- name: Cloudflare Gateway Zero Trust 
-  run: python -m src 
+      - name: Cloudflare Gateway Zero Trust 
+        run: python -m src leave
 ```
 
-* Mình đã update thêm tính năng xoá danh sách khi các bạn không muốn sử dụng script nữa. Vào **[__main__.py](../src/__main__.py)** để như sau:
+* Hỗ trợ **[dynamic_blacklist.txt](../lists/dynamic_blacklist.txt)** và **[dynamic_whitelist.txt](../lists/dynamic_whitelist.txt)** để các bạn tự `chặn` hoặc `bỏ chặn` tên miền theo ý thích
 
-```python
-if __name__ == "__main__":
-    cloudflare_manager = CloudflareManager(PREFIX, MAX_LISTS, MAX_LIST_SIZE)
-    # cloudflare_manager.run()
-    cloudflare_manager.leave() # Leave script 
-```
-
-* Hỗ trợ **[dynamic_blacklist.txt](../lists/dynamic_blacklist.txt)** và **[dynamic_whitelist.txt](../lists/dynamic_whitelist.txt)** để các bạn tự **chặn hoặc bỏ chặn** tên miền theo ý thích 
+* Hỗ trợ thêm `chặn` và `bỏ chặn` trong `Github Actions variables `. Định dạng giống như **[dynamic_blacklist.txt](../lists/dynamic_blacklist.txt)** và **[dynamic_whitelist.txt](../lists/dynamic_whitelist.txt)** ở `Value*`. `DYNAMIC_BLACKLIST` và `DYNAMIC_WHITELIST` cho `Name*`
 
 * Thêm danh sách `chặn` của bạn vào **[adlist.ini](../lists/adlist.ini)** và `loại bỏ chặn` ở **[whitelist.ini](../lists/whitelist.ini)**
 
